@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Đồng hồ số đơn giản</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Courier New", monospace;
+        }
+
+        #dongho {
+            font-size: 80px;
+            color: cyan;
+            text-shadow: 0 0 20px cyan;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="dongho"></div>
+
+    <script>
+    function capNhatDongHo() {
+      let hienTai = new Date();
+
+      let gio = hienTai.getHours();
+      let phut = hienTai.getMinutes();
+      let giay = hienTai.getSeconds();
+
+      let ampm = gio >= 12 ? "PM" : "AM";
+
+      gio = gio % 12;
+      if (gio === 0) {
+        gio = 12;
+      }
+
+      if (gio < 10) {
+        gio = "0" + gio;
+      }
+      if (phut < 10) {
+        phut = "0" + phut;
+      }
+      if (giay < 10) {
+        giay = "0" + giay;
+      }
+
+      let chuoiGio = gio + ":" + phut + ":" + giay + " " + ampm;
+      document.getElementById("dongho").innerText = chuoiGio;
+    }
+
+    setInterval(capNhatDongHo, 1000);
+
+    capNhatDongHo();</script>
+</body>
+</html>

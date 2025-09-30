@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 1 - Phiếu tham gia CLB</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+            h2 span {
+                color: #00aaff;
+            }
+
+        form {
+            display: inline-block;
+            text-align: left;
+            border: 1px solid #555;
+            padding: 15px 25px;
+            background: #fff;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        input, select, button {
+            padding: 6px;
+            margin-left: 10px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        #ketqua {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>PHIẾU THAM GIA CLB TIN HỌC <span>LUBU</span></h2>
+    <form onsubmit="return dangKy();">
+        <p>
+            Mã sinh viên :
+            <input type="text" id="masv" placeholder="Nhập Mã SV">
+            <span id="err_masv" style="color:red"></span>
+        </p>
+        <p>
+            Họ và tên :
+            <input type="text" id="hoten" placeholder="Nhập Họ và tên">
+            <span id="err_hoten" style="color:red"></span>
+        </p>
+        <p>
+            Tuổi :
+            <input type="number" id="tuoi" placeholder="Nhập tuổi > 18">
+            <span id="err_tuoi" style="color:red"></span>
+        </p>
+        <p>
+            Ngoại ngữ :
+            <label><input type="checkbox" name="nn" value="Anh"> Anh</label>
+            <label><input type="checkbox" name="nn" value="Pháp"> Pháp</label>
+            <label><input type="checkbox" name="nn" value="Nhật"> Nhật</label>
+        </p>
+        <p>
+            Chuyên ngành :
+            <select id="cn" onchange="chuyenNganhChanged()">
+                <option value="">--Chọn--</option>
+                <option value="ht">Hệ thống</option>
+                <option value="pm">Phần mềm</option>
+                <option value="mmt">Mạng máy tính</option>
+            </select>
+        </p>
+        <p>
+            Sở trường :
+            <span id="sotruong" style="color:blue"></span>
+        </p>
+        <button type="submit">Đăng ký</button>
+    </form>
+    <p id="ketqua"></p>
+
+    <script>function chuyenNganhChanged() {
+            let cn = document.getElementById("cn").value;
+            let st = "";
+            if (cn === "ht") st = "Phân tích & Thiết kế";
+            else if (cn === "pm") st = "Lập trình";
+            else if (cn === "mmt") st = "Quản lý mạng";
+            document.getElementById("sotruong").innerText = st;
+        }
+
+        function dangKy() {
+            let ok = true;
+            let masv = document.getElementById("masv").value.trim();
+            let hoten = document.getElementById("hoten").value.trim();
+            let tuoi = parseInt(document.getElementById("tuoi").value);
+
+            document.getElementById("err_masv").innerText = "";
+            document.getElementById("err_hoten").innerText = "";
+            document.getElementById("err_tuoi").innerText = "";
+
+            if (masv.length !== 10) {
+                document.getElementById("err_masv").innerText = "Mã SV phải đủ 10 ký tự";
+                ok = false;
+            }
+            if (hoten === "" || hoten.length > 30) {
+                document.getElementById("err_hoten").innerText = "Tên không hợp lệ";
+                ok = false;
+            }
+            if (isNaN(tuoi) || tuoi < 18) {
+                document.getElementById("err_tuoi").innerText = "Tuổi phải >= 18";
+                ok = false;
+            }
+
+            let nn = document.querySelectorAll("input[name='nn']:checked");
+            let ngoaiNgu = [];
+            nn.forEach(n => ngoaiNgu.push(n.value));
+
+            let kq = document.getElementById("ketqua");
+            if (ok) {
+                kq.innerText = " Đăng ký thành công. Ngoại ngữ: " + (ngoaiNgu.length > 0 ? ngoaiNgu.join(", ") : "Chưa chọn");
+                kq.style.color = "green";
+            } else {
+                kq.innerText = " Nhập sai, vui lòng thử lại.";
+                kq.style.color = "red";
+            }
+            return false;
+        }</script>
+</body>
+</html>
